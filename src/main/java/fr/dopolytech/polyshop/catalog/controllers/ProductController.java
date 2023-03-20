@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
@@ -35,8 +36,11 @@ class ProductController {
 	}
 
 	@GetMapping(produces = "application/json")
-	public Flux<Product> findALl() {
-		return repository.findAll();
+	public Flux<Product> findAll(@RequestParam(name = "inventory", required = false) String inventoryId) {
+		if (inventoryId == null) {
+			return repository.findAll();
+		}
+		return repository.findByInventoryId(inventoryId);
 	}
 
 	@PutMapping(value = "/{id}", produces = "application/json")

@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>fr.dopolytech.polyshop</groupId>
 	<artifactId>catalog</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<name>catalog</name>
 	<description>Catalog project of PolyShop</description>
 	<properties>
