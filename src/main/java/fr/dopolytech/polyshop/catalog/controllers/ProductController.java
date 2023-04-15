@@ -1,56 +1,39 @@
 package fr.dopolytech.polyshop.catalog.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import fr.dopolytech.polyshop.catalog.repositories.ProductRepository;
-import fr.dopolytech.polyshop.catalog.documents.Product;
+import fr.dopolytech.polyshop.catalog.dtos.UpdateProductDto;
+import fr.dopolytech.polyshop.catalog.models.Product;
+import fr.dopolytech.polyshop.catalog.services.ProductService;
 
 @RestController
 @RequestMapping("/products")
 class ProductController {
-	@Autowired
-	private ProductRepository repository;
+	private final ProductService productService;
 
-	@PostMapping
-	@ResponseStatus(code = HttpStatus.CREATED)
-	public Mono<Product> create(@RequestBody Product product) {
-		return repository.save(product);
+	public ProductController(ProductService productService) {
+		this.productService = productService;
 	}
 
 	@GetMapping(value = "/{id}", produces = "application/json")
-	public Mono<Product> findOne(@PathVariable("id") String id) {
-		return repository.findById(id);
+	public Mono<Product> findOne(@PathVariable("id") String productId) {
+		return productService.getProduct(productId);
 	}
 
 	@GetMapping(produces = "application/json")
-	public Flux<Product> findAll(@RequestParam(name = "inventory", required = false) String inventoryId) {
-		if (inventoryId == null) {
-			return repository.findAll();
-		}
-		return repository.findByInventoryId(inventoryId);
+	public Flux<Product> findAll() {
+		return productService.getAllProducts();
 	}
 
 	@PutMapping(value = "/{id}", produces = "application/json")
-	public Mono<Product> update(@PathVariable("id") long id, @RequestBody Product god) {
-		repository.save(god);
-		return Mono.just(god);
+	public Mono<Product> update(@PathVariable("id") String productId, @RequestBody UpdateProductDto dto) {
+		return productService.updateProduct(productId, dto);
 	}
 
-	@DeleteMapping(value = "/{id}", produces = "application/json")
-	public Mono<Void> delete(@PathVariable("id") String id) {
-		return repository.deleteById(id);
-	}
 }
