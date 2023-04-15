@@ -1,6 +1,5 @@
 package fr.dopolytech.polyshop.catalog.components;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -8,16 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class QueueUtils {
-    private final ObjectMapper mapper;
-
-    public QueueUtils(ObjectMapper mapper) {
-        this.mapper = mapper;
-    }
-
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public String stringify(Object obj) throws JsonProcessingException {
         return mapper.writeValueAsString(obj);
