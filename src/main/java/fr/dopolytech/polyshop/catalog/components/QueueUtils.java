@@ -1,5 +1,6 @@
 package fr.dopolytech.polyshop.catalog.components;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -11,6 +12,11 @@ public class QueueUtils {
 
     public QueueUtils(ObjectMapper mapper) {
         this.mapper = mapper;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
     public String stringify(Object obj) throws JsonProcessingException {
