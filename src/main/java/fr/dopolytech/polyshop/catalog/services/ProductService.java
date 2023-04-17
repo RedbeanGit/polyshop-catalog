@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import fr.dopolytech.polyshop.catalog.components.QueueUtils;
 import fr.dopolytech.polyshop.catalog.dtos.UpdateProductDto;
 import fr.dopolytech.polyshop.catalog.events.InventoryUpdateEvent;
 import fr.dopolytech.polyshop.catalog.events.InventoryUpdateEventProduct;
@@ -17,11 +16,11 @@ import reactor.core.publisher.Mono;
 @Service
 public class ProductService {
     private final ProductRepository repository;
-    private final QueueUtils queueUtils;
+    private final QueueService queueService;
 
-    public ProductService(ProductRepository repository, QueueUtils queueUtils) {
+    public ProductService(ProductRepository repository, QueueService queueService) {
         this.repository = repository;
-        this.queueUtils = queueUtils;
+        this.queueService = queueService;
     }
 
     public Flux<Product> getAllProducts() {
@@ -44,7 +43,7 @@ public class ProductService {
     @RabbitListener(queues = "inventoryUpdateQueue")
     public void onInventoryUpdate(String message) {
         try {
-            InventoryUpdateEvent inventoryUpdate = this.queueUtils.parse(message, InventoryUpdateEvent.class);
+            InventoryUpdateEvent inventoryUpdate = this.queueService.parse(message, InventoryUpdateEvent.class);
 
             if (inventoryUpdate == null) {
                 return;

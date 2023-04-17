@@ -6,7 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({ "fr.dopolytech.polyshop.repositories" })
+@ComponentScan({ "fr.dopolytech.polyshop.catalog.repositories" })
 @EnableDiscoveryClient
 public class CatalogApplication {
 

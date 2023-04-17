@@ -1,4 +1,4 @@
-package fr.dopolytech.polyshop.catalog.components;
+package fr.dopolytech.polyshop.catalog.services;
 
 import org.springframework.stereotype.Component;
 
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
-public class QueueUtils {
+public class QueueService {
     private final ObjectMapper mapper = new ObjectMapper();
 
     public String stringify(Object obj) throws JsonProcessingException {
