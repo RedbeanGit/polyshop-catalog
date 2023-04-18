@@ -23,7 +23,7 @@ public class ProductService {
         this.queueService = queueService;
     }
 
-    public Flux<Product> getAllProducts() {
+    public Flux<Product> getProducts() {
         return repository.findAll();
     }
 
@@ -40,7 +40,7 @@ public class ProductService {
         });
     }
 
-    @RabbitListener(queues = "inventoryUpdateQueue")
+    @RabbitListener(queues = "catalogQueue")
     public void onInventoryUpdate(String message) {
         try {
             InventoryUpdateEvent inventoryUpdate = this.queueService.parse(message, InventoryUpdateEvent.class);

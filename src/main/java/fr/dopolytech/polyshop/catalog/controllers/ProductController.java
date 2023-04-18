@@ -28,7 +28,7 @@ class ProductController {
 
 	@GetMapping(produces = "application/json")
 	public Flux<Product> findAll() {
-		return productService.getAllProducts();
+		return productService.getProducts();
 	}
 
 	@PutMapping(value = "/{id}", produces = "application/json")
