@@ -40,6 +40,10 @@ public class ProductService {
         });
     }
 
+    public Mono<Product> createProduct(Product product) {
+        return repository.save(product);
+    }
+
     @RabbitListener(queues = "catalogQueue")
     public void onInventoryUpdate(String message) {
         try {

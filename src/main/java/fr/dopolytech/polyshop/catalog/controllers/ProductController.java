@@ -1,10 +1,13 @@
 package fr.dopolytech.polyshop.catalog.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -34,6 +37,12 @@ class ProductController {
 	@PutMapping(value = "/{id}", produces = "application/json")
 	public Mono<Product> update(@PathVariable("id") String productId, @RequestBody UpdateProductDto dto) {
 		return productService.updateProduct(productId, dto);
+	}
+
+	@PostMapping(produces = "application/json")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Mono<Product> create(@RequestBody Product product) {
+		return productService.createProduct(product);
 	}
 
 }
