@@ -21,6 +21,6 @@ public class RabbitMQConfiguration {
 
     @Bean
     public Binding orderBinding(Queue queue, TopicExchange inventoryExchange) {
-        return BindingBuilder.bind(queue).to(inventoryExchange).with("inventory.update");
+        return BindingBuilder.bind(queue).to(inventoryExchange).with("inventory.update.success");
     }
 }
