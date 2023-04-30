@@ -15,12 +15,12 @@ public class RabbitMQConfiguration {
     }
 
     @Bean
-    public TopicExchange inventoryExchange() {
-        return new TopicExchange("inventoryExchange");
+    public TopicExchange orderExchange() {
+        return new TopicExchange("orderExchange");
     }
 
     @Bean
-    public Binding orderBinding(Queue queue, TopicExchange inventoryExchange) {
-        return BindingBuilder.bind(queue).to(inventoryExchange).with("inventory.update.success");
+    public Binding orderBinding(Queue queue, TopicExchange exchange) {
+        return BindingBuilder.bind(queue).to(exchange).with("order.checked");
     }
 }
