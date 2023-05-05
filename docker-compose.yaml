@@ -11,11 +11,6 @@ services:
     ports:
       - "27017:27017"
 
-  eureka:
-    image: redbeandock/polyshop-discovery-server:latest
-    ports:
-      - "8761:8761"
-
   rabbitmq:
     image: rabbitmq:management
     ports:
